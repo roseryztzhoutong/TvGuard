@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    底部「完成」按钮必须永远在屏幕内。
+    老布局把按钮放在最后一个普通子项里，某些电视有 overscan（画面被裁边）
+    或者家长把界面调成「大」，按钮会被挤出屏幕，家长就卡在这一页出不去了。
+    现在中间内容扔进 ScrollView 吃掉剩余高度，按钮固定在最底下。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0B1220"
+    android:paddingStart="48dp"
+    android:paddingEnd="48dp"
+    android:paddingTop="22dp"
+    android:paddingBottom="18dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="答题锁"
+                android:textColor="#FACC15"
+                android:textSize="15sp"
+                android:letterSpacing="0.18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="孩子现在几年级？"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="选好年级后，点最下面的「完成，开始使用」"
+                android:textColor="#94A3B8"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <Button android:id="@+id/g1" style="@style/GradeBtn" android:text="一年级" />
+                <Button android:id="@+id/g2" style="@style/GradeBtn" android:text="二年级" />
+                <Button android:id="@+id/g3" style="@style/GradeBtn" android:text="三年级" />
+                <Button android:id="@+id/g4" style="@style/GradeBtn" android:text="四年级" />
+                <Button android:id="@+id/g5" style="@style/GradeBtn" android:text="五年级" />
+                <Button
+                    android:id="@+id/g6"
+                    style="@style/GradeBtn"
+                    android:layout_marginEnd="0dp"
+                    android:text="六年级" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="题库范围"
+                android:textColor="#94A3B8"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button android:id="@+id/termA" style="@style/TermBtn" android:text="上册" />
+                <Button android:id="@+id/termB" style="@style/TermBtn" android:text="下册" />
+                <Button android:id="@+id/termAB" style="@style/TermBtn" android:text="上下册都要" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text=""
+                android:textColor="#64748B"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="题库来自开源教材配套题库，按人教版 / 统编版编排　·　© 2026 AI漫剧花大叔"
+        android:textColor="#475569"
+        android:textSize="11sp" />
+
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/btn_primary"
+        android:text="完成，开始使用"
+        android:textColor="#0B1220"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:stateListAnimator="@null" />
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">答题锁</string>
+    <string name="device_admin_desc">防止孩子直接卸载本应用。取消激活需要输入家长密码。</string>
+    <string name="a11y_desc">用于在不支持「悬浮窗」权限的电视上，把答题界面盖在视频上层。不读取屏幕内容，不记录任何输入。</string>
+</resources>

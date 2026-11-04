@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>答题锁 v3.8 使用说明</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0B1220; color:#E2E8F0;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.75; padding:24px 18px 60px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:720px; margin:0 auto; }
+  header { text-align:center; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid #1E293B; }
+  .badge {
+    display:inline-block; font-size:12px; letter-spacing:2px; color:#FACC15;
+    border:1px solid #FACC15; border-radius:999px; padding:3px 14px; margin-bottom:14px;
+  }
+  h1 { font-size:26px; color:#FFF; font-weight:700; margin-bottom:8px; }
+  .sub { font-size:14px; color:#64748B; }
+  h2 { font-size:19px; color:#FACC15; margin:34px 0 12px; padding-left:12px; border-left:3px solid #FACC15; }
+  h3 { font-size:16px; color:#FFF; margin:20px 0 10px; }
+  p { margin-bottom:12px; font-size:15px; }
+  .card { background:#111C30; border:1px solid #1E293B; border-radius:14px; padding:16px 18px; margin-bottom:16px; }
+  .card.warn { border-color:#7F1D1D; background:#1A0F14; }
+  .card.ok { border-color:#166534; background:#0C1A14; }
+  ol, ul { padding-left:22px; margin-bottom:12px; }
+  li { margin-bottom:8px; font-size:15px; }
+  code { background:#1E293B; color:#FACC15; padding:2px 7px; border-radius:5px; font-size:13px; font-family:Consolas,Monaco,monospace; }
+  pre {
+    background:#111C30; border:1px solid #1E293B; border-radius:10px; padding:14px;
+    overflow-x:auto; font-size:12.5px; line-height:1.8; color:#93C5FD; margin:10px 0 18px;
+    font-family:Consolas,Monaco,monospace; white-space:pre;
+  }
+  table { width:100%; border-collapse:collapse; margin:12px 0 16px; font-size:14px; }
+  th { background:#1E293B; color:#94A3B8; text-align:left; padding:9px 11px; font-weight:500; font-size:13px; }
+  td { padding:9px 11px; border-bottom:1px solid #1E293B; }
+  td:first-child { color:#FACC15; white-space:nowrap; }
+  .path { display:inline-block; background:#1E293B; color:#93C5FD; padding:2px 8px; border-radius:6px; font-size:13px; }
+  .tag { display:inline-block; font-size:12px; padding:1px 8px; border-radius:4px; background:#FACC15; color:#0B1220; font-weight:600; margin-right:8px; }
+  .tag.gray { background:#334155; color:#CBD5E1; }
+  .step { display:flex; gap:12px; margin-bottom:12px; align-items:flex-start; }
+  .num {
+    flex:0 0 26px; height:26px; border-radius:50%; background:#FACC15; color:#0B1220;
+    font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:3px;
+  }
+  .hl { color:#FACC15; font-weight:600; }
+  .big { font-size:17px; color:#FFF; font-weight:700; }
+  footer { margin-top:40px; padding-top:18px; border-top:1px solid #1E293B; text-align:center; color:#475569; font-size:12px; line-height:1.9; }
+  .muted { color:#94A3B8; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="badge">通用版 · v3.8</div>
+  <h1>答题锁</h1>
+  <div class="sub">电视不锁内容，只把「看了多久」管住。到点弹题，答对才继续<br>著作权归 AI漫剧花大叔 所有</div>
+</header>
+
+<div class="card warn">
+  <p style="margin:0 0 10px;"><span class="hl">v3.8 必读：科学题进题库，一组按科目数出满</span></p>
+  <p style="margin:0 0 10px;"><b>一、科学题入库了，一共 300 道。</b>一到六年级每年级 50 道，覆盖动植物、水与空气、声音与光、简单电路、生物与环境、能量与宇宙这些小学科学的主干内容。默认就开着，不用另外设置。</p>
+  <p style="margin:0 0 10px;"><b>二、一组题按「开着的科目数」出，不再是死板的 3 道。</b>四科全开就是四道，语文、数学、英语、科学各碰一次；关掉科学就回到三道。这样加科目不会出现「排了科学却轮不到」的情况。</p>
+  <p style="margin:0 0 10px;"><b>三、题目顺序还是每次洗牌。</b>孩子猜不到下一道是哪个科目，也背不下顺序。答错一次这一组就重排。</p>
+  <p style="margin:0 0 10px;"><b>四、前面几次的修正都还在：</b>答完回到原来那一集、视频接着播；设置页最下面「设置完成」按得到；家长在设置页时不计时也不弹题；数学题难度跟着年级走。</p>
+  <p style="margin:0;"><b>五、装的时候直接覆盖。</b>签名没变，密码、年级、观看记录全部保留。升级后设置页「出题科目」会多出一个「科学」，是软件自己补上的，不用手动加。</p>
+</div>
+
+<h2>这版能干什么</h2>
+
+<table>
+  <tr><th>能力</th><th>说明</th></tr>
+  <tr><td>按年级出题</td><td>一年级到六年级，上下册分开，题库一万一千道，另加 300 道科学题。四科全开时每组四道，各科各一道，全对才放行</td></tr>
+  <tr><td>孩子跑不掉</td><td>拿到最终权限之后，答题时按桌面键、返回键、最近任务键全部失效，只能靠家长密码出来；切到任何应用都会弹题。没拿到就只在自己界面里有效</td></tr>
+  <tr><td>学习报告</td><td>周报月报，含时长、答题量、正确率、各科表现、最常错的题</td></tr>
+  <tr><td>手机上看报告</td><td>电视开个局域网网页，手机浏览器输个地址就行</td></tr>
+  <tr><td>各种电视都能用</td><td>720p、1080p、4K 自动换算，界面大小还能调三档</td></tr>
+  <tr><td>自带兼容性自检</td><td>换一台电视先跑一遍，哪项权限没开、缺了会怎样，一条条列出来</td></tr>
+  <tr><td>家长密码</td><td>出厂没有默认密码，第一次必须自己设；输错要罚等，孩子试不出来</td></tr>
+  <tr><td>不锁内容</td><td>标准模式，B 站、纪录片、球赛照常看，只计时</td></tr>
+</table>
+
+<h2>怎么确认装的是不是最新版（重要）</h2>
+
+<p>
+  以前的版本号是写在代码里的一段死文字，从 2.4 之后就没再改过。
+  结果不管装的是哪一版，界面上显示的都是 2.4，很容易以为「怎么装都是老版本」。
+  这个问题已经修掉，现在版本号直接从安装包里读。
+</p>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">验证方法：</span>装完打开答题锁，设置页最上面第二行会写着
+  <b>「当前版本 v3.8 (24)」</b>。看到这行字，说明装的就是这一版。
+  如果还显示别的数字，说明电视上装的是旧安装包，不是你刚拷进去的那个文件。</p>
+</div>
+
+<p>确认版本对不上的时候，按这个顺序查：</p>
+
+<table>
+  <tr><th>可能原因</th><th>怎么处理</th></tr>
+  <tr><td>电视里存着好几个安装包，点错了那个</td><td>电视的文件管理里搜「答题锁」，把旧的都删掉，只留 <b>TvGuard-v3.8.apk</b></td></tr>
+  <tr><td>用手机助手、U 盘之类推送，工具缓存了旧文件</td><td>重新推送新文件，推完在电视上核对文件名和大小（1.1 MB）</td></tr>
+  <tr><td>安装时提示「应用未安装」但没注意</td><td>先在电视上卸载旧版，再装新的。卸载前先在答题锁里走一遍退出，解除防卸载</td></tr>
+</table>
+
+<p class="muted">
+  安装包文件名里带了 <code>vc24</code>，这是安装包的内部版本序号，每次发新版都会加一。
+  电视系统的「应用信息」页里也能看到这个数字，和设置页显示的括号里那个数应当一致。
+</p>
+
+<h2>第一步 装到电视上</h2>
+
+<p>APK 在电脑桌面 <span class="path">答题锁</span> 文件夹里。两条路，先试第一条：</p>
+
+<h3><span class="tag">路径 A</span>手机推送（华为、荣耀智慧屏最省事）</h3>
+
+<div class="step"><div class="num">1</div><div>用微信「文件传输助手」把 APK 发给自己，手机上点开保存。</div></div>
+<div class="step"><div class="num">2</div><div>打开智慧生活，点电视卡片，进 <span class="path">应用 → 本地应用安装包</span>，下拉刷新。</div></div>
+<div class="step"><div class="num">3</div><div>列表里出现「答题锁」，点 <span class="hl">安装至智慧屏</span>，电视上选「允许」。</div></div>
+
+<h3><span class="tag gray">路径 B</span>U 盘（安卓电视、电视盒子通用）</h3>
+
+<div class="step"><div class="num">1</div><div>APK 拷到 U 盘<span class="hl">根目录</span>，别放中文文件夹，华为官方说放子目录会失败。</div></div>
+<div class="step"><div class="num">2</div><div>电视进 <span class="path">设置 → 关于本机</span>，连点版本号 5 到 7 次开开发者模式。</div></div>
+<div class="step"><div class="num">3</div><div>到 <span class="path">隐私与安全</span> 打开「未知来源应用安装」，再插 U 盘安装。</div></div>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">装不上怎么办：</span>报「该应用未经认证」或者装完闪退，说明这台是纯血鸿蒙，安卓层已被剥离。接个当贝或小米盒子，电视只当显示器，APK 装盒子里一样用。</p>
+</div>
+
+<h2>第二步 设家长密码（这版新增）</h2>
+
+<p>
+  装好第一次打开，<span class="hl">先让你设一个家长密码</span>，4 到 8 位数字。
+  这一步绕不过去，因为出厂根本没设默认密码，必须自己定一个才能往下走。
+</p>
+
+<p>
+  为什么不像别的软件那样给个 1234：给了就是摆设。孩子第一次就会试 1234，
+  试对了他就进设置页把上限改成 600 分钟，这套东西当天就废了。
+</p>
+
+<div class="step"><div class="num">1</div><div>用遥控器输 4 到 8 位数字，按「确定」。</div></div>
+<div class="step"><div class="num">2</div><div>再输一遍确认。两次不一样会打回重设，防止手滑设成别的。</div></div>
+
+<p class="muted">
+  1234、1111、4321、12345 这种重号和顺子会被直接拒掉，要求换一个。孩子第一个试的就是这几种。
+  2468、2020、7391 这些可以用。
+</p>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">忘了密码只能卸载重装</span>，重装会把这个软件的设置和答题记录一起清空，不影响的别的东西。
+  如果已经开了「防卸载」，得先用电脑 adb 取消设备管理员再卸。设密码的时候就想好记在哪。</p>
+</div>
+
+<h2>第三步 选年级</h2>
+
+<p>设完密码直接进年级选择页，不选年级就没有题可出。</p>
+
+<table>
+  <tr><th>选项</th><th>说明</th></tr>
+  <tr><td>年级</td><td>一到六年级。选完自动加载对应题库，界面下方会显示具体题数</td></tr>
+  <tr><td>题库范围</td><td>上册 / 下册 / 上下册都要。默认按当前月份自动判断</td></tr>
+</table>
+
+<p class="muted">
+  一二年级没有英语教材（人教版从三年级起开英语），所以这两个年级英语科目会自动略过，不用管。
+  以后换年级：家长设置页 → 孩子年级 → 修改，改完立刻生效，不用重装。
+  密码和年级都是随时能改的，改的时候都要先过密码门。
+</p>
+
+<h2>第四步 给权限</h2>
+
+<div class="step"><div class="num">1</div><div>输刚才设的家长密码，进设置页。</div></div>
+<div class="step"><div class="num">2</div><div><span class="hl">这一步最关键：</span>点「开启无障碍」，在跳出来的列表里找到「答题锁」，把它打开。
+  华为这类电视没有「悬浮窗」这个权限项，题目要靠无障碍才能盖到视频上，不开就一定不弹。</div></div>
+<div class="step"><div class="num">3</div><div>点「开启防卸载」，孩子不能在设置里直接卸载。</div></div>
+<div class="step"><div class="num">4</div><div>点「关闭电池优化」，防止系统把守护服务冻住。</div></div>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">还有一项不在这四步里：</span>「最终权限」（设备所有者）。它不是普通权限，得单独走一次。设置页往下找到「最终权限」那一块，做法在下面「关键一步 拿到最终权限」，全程在电视上点，不用电脑。这一项决定孩子按桌面键能不能跑掉，建议装完就做。</p>
+</div>
+
+<h2>这台电视没有「悬浮窗」权限，改用无障碍（v3.0 的关键改动）</h2>
+
+<p>
+  先把事情说清楚：<b>华为智慧屏的设置里本来就没有「悬浮窗」这一项</b>，
+  不是你没找到，也不用再翻「隐私 → 权限管理」。那个页面只列申请过相机、麦克风这类权限的应用，
+  答题锁一个都没申请，所以整个应用不出现。
+</p>
+
+<p>
+  以前软件靠「悬浮窗权限」把题目盖在视频上，这台电视给不了，于是退成「全屏答题页」。
+  但 Android 10 以后系统会拦住应用从后台起界面，孩子开着 B 站的时候，那个全屏页根本拉不起来。
+  这就是「怎么都不弹」的真正原因，跟装没装新版无关。
+</p>
+
+<p>
+  v3.0 换了一条路：用<b>无障碍服务</b>挂浮窗。这条路不需要「悬浮窗」权限，
+  只要在系统的无障碍列表里把答题锁打开就行。而且它顺带解决另一个老毛病：
+  被系统绑定的无障碍服务优先级高，电视的省电策略基本冻不死它，
+  不会再出现「只有打开答题锁这个界面才会计时」。
+</p>
+
+<table>
+  <tr><th>步骤</th><th>怎么做</th></tr>
+  <tr><td>一</td><td>打开答题锁，输家长密码进设置页</td></tr>
+  <tr><td>二</td><td>点「开启无障碍」，软件会跳到系统的无障碍页</td></tr>
+  <tr><td>三</td><td>在列表里找到「答题锁」，把开关打开，弹窗点「允许」</td></tr>
+  <tr><td>四</td><td>回到答题锁设置页，按钮会变成绿色的「无障碍：已开启」，底部提示变绿，说明通了</td></tr>
+</table>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">怎么确认真的通了：</span>进设置页点「计时诊断」，第一屏看两行：
+  「无障碍服务 已开启，浮窗通道可用」、「浮窗通道 无障碍浮窗」。看到这两行就对了。</p>
+</div>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">关于安全：</span>答题锁申请的无障碍权限不开「读取屏幕内容」，
+  只看得到你有按键，看不到画面上的字，也不会把任何内容传出去。这一点在系统弹窗里也能看出来：
+  它没有要求「查看和控制屏幕」。</p>
+</div>
+
+<p class="muted">
+  电视上实在找不到无障碍这一项（个别固化的运营商版本会裁掉），
+  就只剩一条路：拿电脑跑一次交付文件夹里的「一次性配置_需要电脑.bat」，
+  脚本会用 adb 直接把悬浮窗权限和后台白名单一起配好。做法在最后一章。
+</p>
+
+<h2>答题时孩子出不去（v2.6 起）</h2>
+
+<p>
+  桌面键、最近任务键是电视系统自己接管的，普通应用根本收不到。
+  所以这一版用了三道闸：锁任务模式、按键白名单、失焦就拉回。
+</p>
+
+<table>
+  <tr><th>按键</th><th>答题时的结果</th></tr>
+  <tr><td>方向键上下左右</td><td><span style="color:#4ADE80;">可以用</span>，用来挪到某个选项</td></tr>
+  <tr><td>OK 键</td><td><span style="color:#4ADE80;">可以用</span>，确认选这个答案</td></tr>
+  <tr><td>返回键</td><td><span style="color:#4ADE80;">按不动</span>，退不出去</td></tr>
+  <tr><td>最近任务键</td><td><span style="color:#4ADE80;">按不动</span>，调不出后台</td></tr>
+  <tr><td>菜单键、音量键、媒体键</td><td><span style="color:#4ADE80;">按不动</span>，一点反应都没有</td></tr>
+  <tr><td>桌面键 HOME</td><td><span style="color:#FACC15;">会闪一下，立刻被拉回答题界面</span></td></tr>
+  <tr><td>电视电源键</td><td><span style="color:#4ADE80;">照常关屏</span>，关掉就不计时了</td></tr>
+</table>
+
+<div class="card">
+  <p style="margin:0;"><span class="hl">为什么桌面键是「拉回」不是「按不动」：</span>
+  华为这类智慧屏的桌面键不走标准路径，系统直接把自家桌面拉到前台，连屏幕固定都能绕过去。
+  所以软件改成抢回来：只要检测到答题界面被切走，0.1 到 0.3 秒内把自己顶回前台。
+  孩子按一次回一次，按多快都回到题上，试两次就知道按了没用。这一条不怕系统限制，是目前最稳的做法。</p>
+</div>
+
+<p class="muted">
+  管住的是遥控器，不是电视。音量、输入源、语音这些由电视自己的系统处理，软件碰不到，
+  真怕孩子切走就把电视的输入源锁一下，或者把遥控器收起来。
+</p>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">家长自己怎么出来：</span>答题界面上<b>长按返回键 3 秒</b>（按遥控器上的菜单键也行），会弹出家长密码框，
+  输对了这次就不答了。孩子按多久都没用，没密码过不去，乱试一样要罚等。</p>
+</div>
+
+<h2>全屏还是浮窗，软件自己会挑（v2.7 起）</h2>
+
+<p>
+  浮窗盖在视频上体验好，视频不中断，但浮窗拿不到桌面键。全屏答题页能锁按键，代价是视频停一下。
+  两种各有短板，所以这一版让软件自己试、自己记：
+</p>
+
+<table>
+  <tr><th>情况</th><th>软件怎么做</th></tr>
+  <tr><td>第一次弹题</td><td>先试全屏答题页，两秒内确认它真的到前台了没有</td></tr>
+  <tr><td>确认到了前台</td><td>以后每次都走全屏，能锁键</td></tr>
+  <tr><td>两秒还没到前台</td><td>判定这台电视不让后台起界面，<b>立刻改成浮窗</b>，并且记住，以后不再白等</td></tr>
+  <tr><td>浮窗也挂不上</td><td>每六秒换一条路再试，不会停手；同时电视上弹一条通知告诉你被什么挡住了</td></tr>
+</table>
+
+<p class="muted">
+  想让它重新检测，进设置页点一下「立即弹一道题试试」，检测结果会写进「计时诊断」第一屏：
+  全屏答题页能不能用、上次弹题走的哪条路、成没成。这一行字是把问题说清楚的关键，出问题先看它。
+</p>
+
+<h2>为什么以前「只有打开答题锁才会计时」（v2.8 起）</h2>
+
+<p>
+  这个毛病在电视上很典型，值得单独说清楚，因为它不是软件忘了记账，是电视不让软件记账。
+</p>
+
+<p>
+  电视系统为了省电，会把不在屏幕上的应用「冻起来」。冻住的时候，程序一行都不跑。
+  以前的计时是「每醒一秒加一秒」，被冻住的两分钟就白丢了。所以家长看到的现象很奇怪：
+  孩子在 B 站看了一小时，一点动静都没有；家长一打开答题锁这个界面，软件解冻，
+  时间一下跳到满格，题立刻弹出来。
+</p>
+
+<p>这一版改成按真实时间记账，并且加了一个每分钟响一次的系统闹钟：</p>
+
+<table>
+  <tr><th>做法</th><th>效果</th></tr>
+  <tr><td>按真实流逝的时间补记，不再「醒一次加一秒」</td><td>被冻住十分钟，醒来一次就补上十分钟</td></tr>
+  <tr><td>每分钟用系统闹钟把服务叫醒一次</td><td>不用等家长打开界面，它自己会醒</td></tr>
+  <tr><td>深度睡眠的时间不算</td><td>电视关了半小时再开，不会一次扣掉半小时</td></tr>
+  <tr><td>关屏时间不算</td><td>关掉电视就不计时，这条没变</td></tr>
+</table>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">怎么看它现在到底有没有在跑：</span>设置页最上面那一行，
+  正常是绿色的「守护运行中」。如果变成红色的「守护被系统冻结，90 秒没响应」，
+  就是电视把这个软件的后台掐了。进「计时诊断」还能看到「上次心跳几秒前」，
+  那个数字超过 70 秒，一定是被冻住了。</p>
+</div>
+
+<p class="muted">
+  被冻住的时候，按「关闭电池优化」那个按钮，在电视弹出的对话框里选允许。
+  华为智慧屏还要额外去一次：设置 → 应用 → 答题锁 → 耗电管理，选「允许后台活动」。
+  做完这两步，它就不会被冻了。
+</p>
+
+<h2>第五步 调参数</h2>
+
+<table>
+  <tr><th>参数</th><th>出厂值</th><th>建议</th></tr>
+  <tr><td>弹题间隔</td><td>10 分钟</td><td>先按 10 分钟跑一周，适应了再缩到 8 分钟</td></tr>
+  <tr><td>每日上限</td><td>60 分钟</td><td>小学低年级 30 到 45，高年级 60 到 90</td></tr>
+  <tr><td>连续答对几题</td><td>3 题</td><td>一组题数取「开着的科目数」和这个值里的较大者。四科全开就是四道；调成 6 就排两轮</td></tr>
+  <tr><td>连错几次锁定</td><td>3 次</td><td>保持 3 次，太松孩子会乱猜</td></tr>
+  <tr><td>锁定时长</td><td>10 分钟</td><td>连错 3 次冷静 10 分钟</td></tr>
+  <tr><td>出题科目</td><td>语数英科全开</td><td>关掉科学就回到三道；哪科弱可以只开哪科，练几天再加回来</td></tr>
+  <tr><td>界面大小</td><td>标准</td><td>老人看得吃力就选「大」，字会整体放大一档</td></tr>
+</table>
+
+<h2>改完设置怎么算设完了（设置页新增）</h2>
+
+<p>设置页里所有参数都是<b>点了就存</b>，没有「保存」这回事。加减号点一下，数字变了就已经生效了，接着往下调就行。</p>
+
+<p>为了让你有个明确的收尾动作，设置页最上面加了一行提示，最底下加了这个按钮：</p>
+
+<table>
+  <tr><th>情况</th><th>点「设置完成，开始守护」之后</th></tr>
+  <tr><td>密码、年级、守护都齐了</td><td>弹一行「设置完成，守护运行中，每 10 分钟弹 3 题，每天上限 60 分钟」，然后退回桌面</td></tr>
+  <tr><td>缺东西</td><td><span style="color:#FACC15;">直接告诉你缺哪一样</span>：密码没设、没选年级、或者守护停在暂停状态</td></tr>
+</table>
+
+<p class="muted">
+  第一次安装那会儿，按钮在选年级页的最底下，写的是「完成，开始使用」，选好年级点它就开始。
+  这版把它单独固定在屏幕底部了，就算电视画面被裁边（有的机型会裁掉最外一圈），按钮也不会跑出屏幕。
+</p>
+
+<h2>学习报告怎么用</h2>
+
+<p>设置页右上角「学习报告」，里面可以切本周和本月。报告有五种东西：</p>
+
+<table>
+  <tr><th>内容</th><th>怎么读</th></tr>
+  <tr><td>观看时长</td><td>合计、日均、最长的一天，对比每日上限就知道管没管住</td></tr>
+  <tr><td>答题表现</td><td>答了多少、错了多少、正确率。低于 60% 是题偏难</td></tr>
+  <tr><td>各科表现</td><td>语文数学英语分开算，一眼看出哪科在拖后腿</td></tr>
+  <tr><td>最常错的题</td><td>直接列出题干和正确答案，讲题的时候有靶子</td></tr>
+  <tr><td>建议</td><td>按数据给的具体动作，比如「把连对从 3 降到 2」</td></tr>
+</table>
+
+<h3>三种方式拿到手</h3>
+
+<div class="step"><div class="num">1</div><div><span class="hl">电视上看</span>：遥控器上下滚动，纯文字，够用。</div></div>
+<div class="step"><div class="num">2</div><div><span class="hl">手机上看</span>：点「手机查看」，电视会显示一个地址，形如 <code>192.168.1.23:8666</code>。手机连同一个 WiFi，浏览器输进去就是排版好的网页。</div></div>
+<div class="step"><div class="num">3</div><div><span class="hl">导出文件</span>：点「导出」，生成一个 HTML 文件存在电视上，U 盘拷出来可以发微信。</div></div>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">自动提醒：</span>每周一提醒上周报告，每月 1 号提醒上月报告，点通知直接打开。数据全部存在电视本地，不上传任何服务器，手机看报告也只在家庭局域网内。</p>
+</div>
+
+<h2>各种电视怎么适配的</h2>
+
+<p>
+  电视的 DPI 报得极乱：同样一块 1080p 屏，有的报 320dpi，有的报 160dpi，4K 机型更夸张。
+  如果按屏幕物理参数排版，同一套界面在不同电视上一半太大一半太小。
+</p>
+
+<p>
+  这版的做法是把任意电视都换算成统一的 <span class="hl">960 × 540 逻辑画布</span>：
+  按短边像素反推 density，720p、1080p、4K 全部渲染成同一个坐标系。
+  布局只需要按这个尺寸设计一次，所有机器看到的比例都一样。
+</p>
+
+<table>
+  <tr><th>电视</th><th>实际像素</th><th>换算后</th></tr>
+  <tr><td>720p 老电视</td><td>1280 × 720</td><td>960 × 540</td></tr>
+  <tr><td>1080p 主流</td><td>1920 × 1080</td><td>960 × 540</td></tr>
+  <tr><td>4K 新机</td><td>3840 × 2160</td><td>960 × 540</td></tr>
+  <tr><td>1366 宽盒子</td><td>1366 × 768</td><td>约 962 × 540</td></tr>
+</table>
+
+<p class="muted">
+  另外所有页面都可滚动，题目再长也不会把选项挤出屏幕；字号按文字长度自动缩一档，英语整句选项也放得下。
+  家里老人看着吃力，设置页可以把界面切到「大」。
+</p>
+
+<h2>换个牌子行不行（小米 TCL 海信这些）</h2>
+
+<p>
+  先说结论：<span class="hl">这个软件不认牌子</span>。它只用安卓系统自带的四个能力，小米、TCL、海信、创维、索尼跑的是同一套代码。
+  真正决定能不能用的不是品牌，是这四个开关有没有被厂商裁掉。
+</p>
+
+<table>
+  <tr><th>卡点</th><th>没放开会怎样</th><th>怎么办</th></tr>
+  <tr><td>能不能装 APK</td><td>连安装都进不去</td><td>开「未知来源安装」；纯鸿蒙和非安卓 VIDAA 装不了，只能外接盒子</td></tr>
+  <tr><td>悬浮窗权限</td><td>答题界面弹不出来，等于白装</td><td>设置里开；电视上找不到入口，用电脑 adb 一条命令直接给</td></tr>
+  <tr><td>浮窗收遥控器</td><td>题目出来了但选不了，孩子干瞪眼</td><td>装上先跑自检实测。测不过说明这台的浮窗拿不到焦点，要出针对性补丁</td></tr>
+  <tr><td>后台存活</td><td>切后台被系统掐掉，计时断断续续</td><td>关电池优化 + 加自启动白名单</td></tr>
+</table>
+
+<h3>各品牌的实际情况</h3>
+
+<table>
+  <tr><th>品牌</th><th>系统底座</th><th>能装 APK</th><th>「未知来源安装」在哪</th></tr>
+  <tr><td>小米 / Redmi</td><td>安卓定制 PatchWall</td><td>能</td><td>设置 → 账号与安全 → 安装未知来源应用</td></tr>
+  <tr><td>TCL / 雷鸟</td><td>安卓定制 灵控</td><td>能</td><td>设置 → 系统与权限 → 安全防护设置</td></tr>
+  <tr><td>海信 / Vidda</td><td>安卓定制 VIDAA</td><td>大部分能</td><td>设置 → 更多设置 → 安全</td></tr>
+  <tr><td>创维 / 酷开</td><td>安卓定制</td><td>能</td><td>设置 → 隐私与安全</td></tr>
+  <tr><td>华为 / 荣耀智慧屏</td><td>鸿蒙 + 安卓兼容层</td><td>鸿蒙 2/3/4 能，纯鸿蒙 NEXT 不行</td><td>应用 → 本地应用安装包</td></tr>
+  <tr><td>索尼 / 飞利浦 / 松下</td><td>原生 Android TV / Google TV</td><td>能，最省事</td><td>设置 → 应用 → 特殊应用权限</td></tr>
+  <tr><td>长虹 / 康佳</td><td>安卓定制</td><td>能</td><td>各代菜单名不同，搜「未知来源」三个字</td></tr>
+  <tr><td>当贝 / 极米 / 坚果（盒子投影）</td><td>安卓</td><td>能，最容易</td><td>自带应用市场直接装</td></tr>
+</table>
+
+<p class="muted">
+  同一品牌不同年份的机型，菜单名字也常改。找不到就一路点进「设置 → 应用」，或者直接搜「未知来源」三个字。
+  装的时候报「解析包错误」，多半是这台根本跑的不是安卓（比如海信的老 VIDAA），换盒子比折腾快。
+</p>
+
+<h3>装上第一件事：跑一遍自检</h3>
+
+<p>设置页现在有两个新按钮，换电视、给别人装，都先跑这两个：</p>
+
+<div class="step"><div class="num">1</div><div>点<span class="hl">「兼容性自检」</span>。它会把这个品牌的系统是什么、哪一项没开、这一项没开会怎样、去哪开，一条条列出来。红色是必须解决，黄色是建议解决。</div></div>
+<div class="step"><div class="num">2</div><div>点<span class="hl">「遥控器按键测试」</span>。屏幕上会盖一层黑底提示，按几下方向键，十秒后自动出结果。</div></div>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">这一步是全套方案里最关键的验证。</span>答题界面是用悬浮窗盖在视频上的，如果这层浮窗在这台电视上拿不到遥控器焦点，孩子就没法选选项。测出来的三种结果：</p>
+</div>
+
+<table>
+  <tr><th>自检结果</th><th>说明</th><th>下一步</th></tr>
+  <tr><td>绿色「遥控器能操作答题浮窗」</td><td>最正常的情况，能直接用了</td><td>不用管</td></tr>
+  <tr><td>黄色「按键到不了答题浮窗」</td><td>这台的浮窗抢不到焦点</td><td>把悬浮窗权限关掉，软件会自动走全屏答题页，那边按键一定正常</td></tr>
+  <tr><td>黄色「没收到任何按键」</td><td>可能是没按，也可能是遥控器没走系统按键通道</td><td>再点一次，按几下方向键重试</td></tr>
+</table>
+
+<h3>实在找不到悬浮窗入口</h3>
+
+<p>少数电视把这一项从设置里彻底删了。想要浮窗那种无缝体验，可以用电脑 adb 一条命令补上，不用 root。不想折腾也完全没问题，跳过就是全屏模式：</p>
+
+<pre>adb connect 192.168.1.23:5555
+adb shell appops set com.tvguard SYSTEM_ALERT_WINDOW allow</pre>
+
+<p class="muted">
+  第一条的 IP 换成你家电视的，5555 是开 ADB 调试后显示的端口号。执行完回电视重新进一次「兼容性自检」，那一项会变绿。
+</p>
+
+<h3>三种结局，对着看</h3>
+
+<table>
+  <tr><th>结局</th><th>表现</th><th>成本</th></tr>
+  <tr><td>直接能用</td><td>四项全绿，装上就管用</td><td>0</td></tr>
+  <tr><td>要补一刀</td><td>能装，但悬浮窗入口被裁。不补也能用，走全屏弹题；想无缝就 adb 补一次</td><td>0，只需一台电脑</td></tr>
+  <tr><td>装不了</td><td>纯鸿蒙 NEXT 或非安卓 VIDAA，APK 根本装不上</td><td>外接安卓盒子，200 到 300 元，盒子比电视系统干净得多</td></tr>
+</table>
+
+<p class="muted">
+  顺带一句：电视盒子反而是这套东西最舒服的运行环境。当贝、小米盒子这类设备原生安卓、性能足够、系统不阉割，插在电视 HDMI 上，
+  电视本身还按原样看，答题锁只管盒子这一路输入。
+</p>
+
+<h2>不想用了怎么退出（这版新增）</h2>
+
+<p>
+  装上去容易，停下来也得有个正门。设置页最下面有个红色按钮 <span class="hl">退出 / 关闭守护</span>，
+  点了要先再输一次家长密码。
+</p>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">为什么进了设置页还要再输一次：</span>能进设置不等于能拆防护。
+  遥控器乱按几下也有可能钻进设置页，多设这一道，孩子按不出来。</p>
+</div>
+
+<table>
+  <tr><th>选项</th><th>做了什么</th><th>还能恢复吗</th></tr>
+  <tr><td>一、今天先停掉</td><td>不再弹题。重启电视也不会自己起来</td><td><span style="color:#4ADE80;">能</span>。输密码后点「恢复守护」</td></tr>
+  <tr><td>二、关掉并解除防卸载</td><td>停掉答题，同时取消设备管理器、放开卸载限制</td><td><span style="color:#4ADE80;">能</span>。但防卸载要重新手动开</td></tr>
+  <tr><td>三、卸载并清除全部数据</td><td>先解除全部防护，再跳系统卸载</td><td><span style="color:#F87171;">不能</span>。记录、设置、密码一起没</td></tr>
+</table>
+
+<p class="muted">
+  卸载按钮要按两下，中间留 8 秒反悔窗口，第一下只是变成「确认卸载」，不点第二下就自动还原。
+  如果这台电视把卸载界面砍掉了，软件会直接告诉你用哪条 ADB 命令，不会卡在那儿不动。
+</p>
+
+<p class="muted">
+  还有一个细节：点了「关掉并解除防卸载」之后，设置页右上角的状态会从「已暂停」变成「已关闭」，
+  看一眼就知道防护是不是真的拆干净了。
+</p>
+
+<h2>孩子可能怎么绕</h2>
+
+<table>
+  <tr><th>绕过方式</th><th>结果</th></tr>
+  <tr><td>断电重启</td><td><span style="color:#4ADE80;">拦住了</span>。开机自启，时长存本地</td></tr>
+  <tr><td>按返回键</td><td><span style="color:#4ADE80;">拦住了</span>。遮罩吃掉返回键</td></tr>
+  <tr><td>按 HOME 回桌面</td><td><span style="color:#4ADE80;">拦住了</span>。拿到最终权限之后，答题期间按桌面键毫无反应，退出锁任务都只有家长密码能解开；没拿到之前会闪一下桌面，0.1 到 0.3 秒内被拉回</td></tr>
+  <tr><td>按最近任务键</td><td><span style="color:#4ADE80;">拦住了</span>。按键直接被吃掉，调不出后台</td></tr>
+  <tr><td>切 HDMI 输入源、喊语音助手</td><td><span style="color:#F87171;">拦不住</span>。这些是电视系统直接处理的，任何应用都碰不到</td></tr>
+  <tr><td>直接卸载</td><td><span style="color:#4ADE80;">拦住了</span>。开防卸载，上设备所有者后彻底卸不掉</td></tr>
+  <tr><td>进设置强行停止</td><td><span style="color:#F87171;">拦不住</span>。安卓通病，只能提高门槛</td></tr>
+  <tr><td>改系统时间</td><td><span style="color:#F87171;">部分能绕</span>。会让当天统计提前重置</td></tr>
+  <tr><td>换个视频 App</td><td><span style="color:#4ADE80;">拦住了</span>。管的是屏幕时间，不分软件</td></tr>
+  <tr><td>乱试家长密码</td><td><span style="color:#4ADE80;">拦住了</span>。每次错都要罚等，越错越久，输对一次才清零</td></tr>
+</table>
+
+<h2>密码防试是怎么做的</h2>
+
+<p>
+  光设个密码没用。四位数字一共一万种，孩子拿着遥控器一个个试，十分钟能试上百个。
+  所以错到一定次数就要罚等，而且这个次数<span class="hl">写在电视本地，关机、重启、拔电源都不清零</span>。
+</p>
+
+<table>
+  <tr><th>连续输错</th><th>结果</th></tr>
+  <tr><td>前 3 次</td><td>只提示还剩几次，不用等。留给你手滑的余地</td></tr>
+  <tr><td>第 4 次起</td><td>每次错都要等 30 秒才能再输</td></tr>
+  <tr><td>错到 9 次</td><td>每次等 1 分钟</td></tr>
+  <tr><td>错到 14 次</td><td>每次等 2 分钟</td></tr>
+  <tr><td>错到 19 次以上</td><td>每次等 5 分钟，封顶就到这</td></tr>
+</table>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">为什么不锁得更狠：</span>孩子乱按会把你一起锁在外面。5 分钟封顶，你最多等一下就能进。
+  而孩子要把一万种全试完，累计得等<span class="hl">三十多天</span>，不划算。你输对一次，次数立刻清零。</p>
+</div>
+
+<p class="muted">
+  另外冻结界面的是「罚等」不是「锁死」：等待时间一过就能继续输，不会出现彻底进不去的情况。
+  真忘了密码，看下面「忘了密码怎么办」那一节，那里写了唯一的出路。
+</p>
+
+<h2>忘了密码怎么办</h2>
+
+<p>软件里没有任何找回密码的入口，这是故意的：能找回就等于能被绕过。出路只有下面两条。</p>
+
+<div class="step"><div class="num">1</div><div>没开防卸载：直接卸载重装，设置和答题记录一起清掉，重新走一遍首次设置。</div></div>
+<div class="step"><div class="num">2</div><div>开了防卸载：用电脑连电视，先摘掉设备管理器，再卸载。</div></div>
+
+<pre style="background:#111C30;border:1px solid #1E293B;border-radius:10px;padding:14px;overflow-x:auto;font-size:12.5px;line-height:1.8;color:#93C5FD;margin:10px 0 18px;">
+adb connect 192.168.1.23:5555
+adb shell dpm remove-active-admin com.tvguard/.AdminReceiver
+adb uninstall com.tvguard</pre>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">上过设备所有者的机器，</span>摘身份这一步有可能被系统拒绝，那就只剩恢复出厂设置一条路。
+  所以设密码的时候顺手记在手机备忘录里，比事后折腾省事得多。</p>
+</div>
+
+<h2>关键一步 拿到最终权限（在电视上点两下，不用电脑）</h2>
+
+<p>这一版把「拿最终权限」做进了软件里。以前要电脑跑脚本，现在软件自己连电视本机的调试服务，
+你在电视上按遥控器确认一次，剩下的命令由它自己执行。</p>
+
+<div class="card ok">
+  <p style="margin:0 0 10px;"><span class="hl">拿到之后是什么效果：</span>答题时桌面键、返回键、最近任务键全部失效，
+  按下去毫无反应；孩子切到 B 站、腾讯视频、游戏，到点都会弹题，答完接着看原来那一集。</p>
+  <p style="margin:0;"><span class="hl">没拿到是什么效果：</span>只在自己界面里有效，孩子一按桌面键就出去了。</p>
+</div>
+
+<div class="card warn">
+  <p style="margin:0 0 10px;"><span class="hl">唯一只能你亲手做的一步：打开电视的调试开关。</span>
+  这是系统开关，任何软件都碰不到，遥控器按几下就好，一次性的事。</p>
+  <p style="margin:0 0 8px;"><b>华为智慧屏（KANT-360S 实测）：</b>设置 → 系统 → 关于本机 → 光标停在
+  <b>「型号代码」</b>上连按 7 到 12 次 → 返回 → 通用 → 其他 → <b>开发人员选项</b> →
+  顶部总开关打开 → 往下找 <b>「HDC 调试」</b>，打开它。</p>
+  <p style="margin:0 0 8px;"><b>小米、TCL、海信这些：</b>设置 → 关于 → 连点「版本号」7 次 → 开发者选项 →
+  把 <b>「USB 调试」和「网络 ADB 调试」</b>都打开。</p>
+  <p style="margin:0;"><b>「HDC 调试」这个名字不用怕。</b>实测打开之后，5555 端口上跑的仍然是标准安卓调试，
+  命令照常能进。它不是另一套协议，华为只是把开关起了这个名字。</p>
+</div>
+
+<p>刚改过开关，建议把电视重启一次再往下做，个别机型不重启不生效。</p>
+
+<h3>三步做完</h3>
+
+<div class="step"><div class="num">1</div><div>电视上打开答题锁，输家长密码进设置页，往下找到「最终权限」这一块。</div></div>
+<div class="step"><div class="num">2</div><div>点<b>「只检查调试通道」</b>。几秒出结果，绿字就是通了，红字会写清楚是哪种情况。</div></div>
+<div class="step"><div class="num">3</div><div>绿了之后点<b>「一键获取最终权限」</b>。电视可能弹一个「是否允许调试」的框，用遥控器把光标移到
+<b>「允许」</b>再按 OK。之后进度一行行走，走到「已拿到设备所有者」就成了。</div></div>
+
+<p>检查按钮会给出四种结果，对着看：</p>
+
+<table>
+  <tr><th>你看到的结果</th><th>意思</th><th>怎么办</th></tr>
+  <tr><td>绿字「通道已打开」</td><td>5555 端口是标准安卓调试</td><td>直接点「一键获取最终权限」</td></tr>
+  <tr><td>红字「端口在，但回的不是安卓调试协议」</td><td>门开了，但协议被换掉了</td><td>这台机器这条路走不通，看下面的备用路</td></tr>
+  <tr><td>红字「8710 开着，5555 没开」</td><td>只开了 HDC 那一半</td><td>回开发者选项再翻一遍，找「USB 调试 / 无线调试 / 网络 ADB 调试」</td></tr>
+  <tr><td>红字「一个口都没开」</td><td>调试开关没打开，或开了没重启</td><td>回到上面那一步，开完重启电视</td></tr>
+</table>
+
+<div class="card">
+  <p style="margin:0 0 10px;"><span class="hl">获取失败时，进度里会直接写原因：</span></p>
+  <p style="margin:0 0 8px;">一、<b>already some accounts</b>：电视上登着华为账号。去
+  <span class="path">设置 → 账号中心</span> 退出，再点一次。</p>
+  <p style="margin:0 0 8px;">二、<b>already several users</b>：电视上开了多用户。<span class="path">设置 → 用户</span> 里只留一个。</p>
+  <p style="margin:0;">三、<b>不认 dpm 命令</b>：厂家把这条命令裁掉了。这台机器走不通，看下面的备用路。</p>
+</div>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">做失败了不会有任何损坏。</span>软件照常能用，只是回到「只在自己界面里生效」。
+  设置页「跨应用能力」那一行会明确写现在处在哪一档，不用猜。</p>
+</div>
+
+<h2>备用路一：把答题锁设成电视桌面</h2>
+
+<div class="card warn">
+  <p style="margin:0;"><span class="hl">华为智慧屏走不了这一节。</span>KANT-360S 的设置里根本没有「默认桌面 / 主屏幕」
+  这一项，试过，白忙。其他牌子可以先看一眼设置里有没有这一项，没有再往下看「备用路二」。</p>
+</div>
+
+<p>安卓允许第三方应用当桌面。在电视设置里把默认桌面换成答题锁之后，孩子按桌面键回到的就是答题锁，
+所有应用摆在上面，没有第二个入口。</p>
+
+<table>
+  <tr><th>孩子在干什么</th><th>会发生什么</th></tr>
+  <tr><td>想看电视，按桌面键</td><td>回到答题锁的桌面。应用都在这里，没有第二个入口</td></tr>
+  <tr><td>点开 B 站、腾讯视频</td><td>到点了先答题，连续答对才放行。没到点直接进，不打扰</td></tr>
+  <tr><td>按返回键想溜</td><td>没用。答题锁桌面是任务栈的根，退不出去</td></tr>
+  <tr><td>长按菜单键想找设置</td><td>弹家长密码。孩子没有密码，进不去</td></tr>
+</table>
+
+<div class="step"><div class="num">1</div><div>设置页往下找「把答题锁设成电视桌面」，点「去设成默认桌面」，列表里选「答题锁」，有「始终」就选「始终」。</div></div>
+<div class="step"><div class="num">2</div><div>设置页点「开启无障碍」，在无障碍列表里找到答题锁并打开。</div></div>
+<div class="step"><div class="num">3</div><div>回设置页看最上面那一行，绿字「已接管桌面」就是成了。想看效果点旁边的「预览桌面」。</div></div>
+
+<p class="muted">
+  换完之后想装新应用、调分辨率、连新 WiFi，从答题锁设置页点「打开电视系统设置」，不用去别处找。
+  想撤销，同样进那个地方，在 应用 → 默认应用 → 主屏幕 里选回电视原来的桌面，改完立刻生效。
+</p>
+
+<h2>备用路二：用电脑或安卓手机（最后一条路）</h2>
+
+<p>上面两条都不通，才走这条。原理一样，只是命令由外部设备灌进去。</p>
+
+<div class="card ok">
+  <p style="margin:0;"><span class="hl">最省事的做法：</span>直接双击交付文件夹里的
+  <b>一键配置最终权限_需要电脑.bat</b>，一路回车。脚本会自己找电视、设设备所有者、打开无障碍、
+  放行悬浮窗权限、加进省电白名单，最后把真实状态读回来打给你看。<code>adb</code> 工具已经放在同一个文件夹的
+  <code>adb</code> 目录里，不用另外装。</p>
+</div>
+
+<p>电视上要动的地方只有两处：开发者选项里的「USB 调试 / 网络 ADB 调试」打开，
+以及 设置 → 关于 → 网络信息 里记下电视 IP（形如 <code>192.168.1.23</code>）。</p>
+
+<pre style="background:#111C30;border:1px solid #1E293B;border-radius:10px;padding:14px;overflow-x:auto;font-size:12.5px;line-height:1.8;color:#93C5FD;margin:10px 0 18px;">
+adb connect 192.168.1.23:5555
+adb devices
+adb shell dpm set-device-owner com.tvguard/.AdminReceiver
+adb shell settings put secure enabled_accessibility_services com.tvguard/com.tvguard.A11y
+adb shell settings put secure accessibility_enabled 1
+adb shell appops set com.tvguard SYSTEM_ALERT_WINDOW allow
+adb shell dumpsys deviceidle whitelist +com.tvguard</pre>
+
+<p>第三行出现 <code>Success</code> 就成了。没有电脑的话，安卓手机装一个「甲壳虫ADB助手」之类的工具，
+连同一个 WiFi，把上面几行逐条粘进去，效果一样。前提是电视上不能登着华为账号，登着就先退掉。</p>
+
+<p class="muted">
+  想撤销就在电脑上执行：<code>adb shell dpm remove-active-admin com.tvguard/.AdminReceiver</code><br>
+  上过设备所有者的机器，摘身份有可能被系统拒绝，那就只剩恢复出厂设置一条路。设密码的时候顺手记在手机备忘录里。
+</p>
+
+<h2>题库来源</h2>
+
+<p>
+  题目不是编的。用的是开源项目 ChinaTextbookStudyFree（聪聪学堂，MIT 协议）里
+  一到六年级上下册的教材配套选择题，按人教版数学、统编版语文、人教 PEP 英语编排。
+  原始 21473 道，只取适合遥控器四选一的 <span class="hl">10937 道</span>，
+  判断题、填空题、连线题、连词成句在电视上没法操作，全部剔除。
+</p>
+
+<p class="muted">
+  按年级学期拆成十二个文件放在 APK 里，只加载家长选中的那几本，
+  一二年级的机器不会去解析六年级的题目。<br>题库重新生成脚本：<code>tvguard/tools/build_bank.py</code>
+</p>
+
+<h2>著作权</h2>
+
+<div class="card">
+  <p class="big" style="margin-bottom:8px;">答题锁 v3.8</p>
+  <p style="margin:0;font-size:14px;color:#CBD5E1;">
+    产品设计与程序著作权归 <span class="hl">AI漫剧花大叔</span> 所有。<br>
+    题库内容来自 ChinaTextbookStudyFree（MIT 协议），版权归原作者，已在 APK 内附 THIRD-PARTY-NOTICE。<br>
+    本应用不联网上传任何数据，不收集个人信息，所有记录只存在电视本地。
+  </p>
+</div>
+
+<footer>
+  答题锁 v3.8 · 包名 com.tvguard · 不联网 · 不收集数据<br>
+  © 2026 AI漫剧花大叔　保留所有权利
+</footer>
+
+</div>
+</body>
+</html>

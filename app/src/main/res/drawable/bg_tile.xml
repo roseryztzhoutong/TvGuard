@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面上的应用格子。两种状态：
+  普通是深色卡片，拿到遥控器焦点时变亮并描一圈金边。
+
+  TV 上「焦点"必须一眼看得出来」比好看更重要，孩子拿遥控器乱按的时候，
+  得知道自己现在停在哪个应用上。
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#2B3A55" />
+            <corners android:radius="14dp" />
+            <stroke android:width="3dp" android:color="#FACC15" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#243249" />
+            <corners android:radius="14dp" />
+            <stroke android:width="2dp" android:color="#FACC15" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#151E31" />
+            <corners android:radius="14dp" />
+            <stroke android:width="2dp" android:color="#22304A" />
+        </shape>
+    </item>
+</selector>

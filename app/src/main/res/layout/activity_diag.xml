@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark"
+    android:paddingLeft="26dp"
+    android:paddingRight="26dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="计时与弹题诊断"
+            android:textColor="@color/gold"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnDiagRefresh"
+            style="@style/SmallBtn"
+            android:text="刷新" />
+
+        <Button
+            android:id="@+id/btnDiagCopy"
+            style="@style/SmallBtn"
+            android:layout_marginLeft="8dp"
+            android:text="复制" />
+
+        <Button
+            android:id="@+id/btnDiagClear"
+            style="@style/SmallBtn"
+            android:layout_marginLeft="8dp"
+            android:text="清空" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="这里能看到计时器每秒在做什么、每次弹题是成功还是被系统拦住了。弹不出题时先看这里。"
+        android:textColor="#94A3B8"
+        android:textSize="12sp" />
+
+    <ScrollView
+        android:id="@+id/diagScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvDiagState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:padding="12dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#E2E8F0"
+                android:textSize="13sp"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="最近发生的事（最新的在最上面）"
+                android:textColor="#7DD3FC"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDiagLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_card"
+                android:padding="12dp"
+                android:lineSpacingExtra="3dp"
+                android:fontFamily="monospace"
+                android:textColor="#CBD5E1"
+                android:textSize="11sp"
+                android:text="" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnDiagClose"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_option"
+        android:textColor="@color/btn_option_text"
+        android:textSize="14sp"
+        android:stateListAnimator="@null"
+        android:focusable="true"
+        android:text="返回" />
+
+</LinearLayout>

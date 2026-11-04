@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  根布局从 ScrollView 换成了 LinearLayout：把「设置完成」钉在屏幕最下面一条。
+
+  为什么要钉住：这一页内容很长，遥控器要按十几下才滚到底，
+  而遥控器的焦点搜索在长滚动列表里会跳过终点那个通栏按钮，
+  直接从上面的两列按钮跳到下面的「退出 / 关闭守护」。家长的原话是「一直往下按会跳过它」。
+  钉到底部之后它永远在屏幕坐标的最下方，按 DOWN 躲不开，
+  也不用先滚十几下才能点到。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0B1220"
+    android:orientation="vertical">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:padding="20dp"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="答题锁 · 家长设置"
+                android:textColor="#FACC15"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRunState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#4ADE80"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnReport"
+                style="@style/SmallBtn"
+                android:layout_marginStart="10dp"
+                android:text="学习报告" />
+        </LinearLayout>
+
+        <!-- 家长最常问的一句：改完了没保存会丢吗。所有设置都是点了就存，这里写明 -->
+        <TextView
+            android:id="@+id/tvVerLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="所有改动点了就生效，不用找保存键。改完点屏幕最下面那个「设置完成」即可"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
+
+        <!-- 今日数据 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今日已看 0 分钟 / 上限 60 分钟"
+                android:textColor="#E2E8F0"
+                android:textSize="15sp" />
+
+            <ProgressBar
+                android:id="@+id/pbToday"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressTint="#FACC15"
+                android:progressBackgroundTint="#334155" />
+
+            <TextView
+                android:id="@+id/tvStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="累计答题 0 次，答对 0 次"
+                android:textColor="#94A3B8"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvBank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="题库 0 题，本轮已掌握 0 题"
+                android:textColor="#FACC15"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- 年级与题库 -->
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="孩子年级" />
+            <TextView
+                android:id="@+id/tvGrade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="未设置"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+            <Button android:id="@+id/btnGrade" style="@style/SmallBtn" android:text="修改" />
+        </LinearLayout>
+
+        <!-- 参数 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="6dp"
+            android:text="规则"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="弹题间隔" />
+            <Button android:id="@+id/btnIntervalDec" style="@style/StepBtn" android:text="-" />
+            <TextView android:id="@+id/tvInterval" style="@style/SettingValue" />
+            <Button android:id="@+id/btnIntervalInc" style="@style/StepBtn" android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="每日上限" />
+            <Button android:id="@+id/btnDailyDec" style="@style/StepBtn" android:text="-" />
+            <TextView android:id="@+id/tvDaily" style="@style/SettingValue" />
+            <Button android:id="@+id/btnDailyInc" style="@style/StepBtn" android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="连续答对几题" />
+            <Button android:id="@+id/btnStreakDec" style="@style/StepBtn" android:text="-" />
+            <TextView android:id="@+id/tvStreak" style="@style/SettingValue" />
+            <Button android:id="@+id/btnStreakInc" style="@style/StepBtn" android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="连错几次锁定" />
+            <Button android:id="@+id/btnWrongDec" style="@style/StepBtn" android:text="-" />
+            <TextView android:id="@+id/tvWrong" style="@style/SettingValue" />
+            <Button android:id="@+id/btnWrongInc" style="@style/StepBtn" android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="锁定时长" />
+            <Button android:id="@+id/btnLockDec" style="@style/StepBtn" android:text="-" />
+            <TextView android:id="@+id/tvLock" style="@style/SettingValue" />
+            <Button android:id="@+id/btnLockInc" style="@style/StepBtn" android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="出题科目" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSubChinese"
+                    style="@style/ActionBtn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="语文" />
+                <Button
+                    android:id="@+id/btnSubMath"
+                    style="@style/ActionBtn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="数学" />
+                <Button
+                    android:id="@+id/btnSubEnglish"
+                    style="@style/ActionBtn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="英语" />
+                <Button
+                    android:id="@+id/btnSubScience"
+                    style="@style/ActionBtn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="科学" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/SettingRow">
+            <TextView style="@style/SettingLabel" android:text="界面大小" />
+            <Button android:id="@+id/btnScaleS" style="@style/SmallBtn" android:text="小" />
+            <Button android:id="@+id/btnScaleM" style="@style/SmallBtn" android:layout_marginStart="6dp" android:text="标准" />
+            <Button android:id="@+id/btnScaleL" style="@style/SmallBtn" android:layout_marginStart="6dp" android:text="大" />
+        </LinearLayout>
+
+        <!-- 操作 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="6dp"
+            android:text="权限与维护"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:id="@+id/btnOverlay" style="@style/ActionBtn" android:text="开启悬浮窗权限" />
+            <Button android:id="@+id/btnAdmin" style="@style/ActionBtn" android:text="开启防卸载" />
+            <Button android:id="@+id/btnBattery" style="@style/ActionBtn" android:text="关闭电池优化" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:id="@+id/btnAddTime" style="@style/ActionBtn" android:text="今天加 30 分钟" />
+            <Button android:id="@+id/btnReset" style="@style/ActionBtn" android:text="今日时长清零" />
+            <Button android:id="@+id/btnNewBatch" style="@style/ActionBtn" android:text="换一批题" />
+            <Button android:id="@+id/btnChangePin" style="@style/ActionBtn" android:text="修改密码" />
+            <Button android:id="@+id/btnToggle" style="@style/ActionBtn" android:text="暂停守护" />
+        </LinearLayout>
+
+        <!--
+          最终权限。放在所有方案最前面，因为它是唯一能让管理能力伸出本应用的办法：
+          拿到之后，悬浮窗、后台弹题、真锁任务、防卸载一次性全解决，
+          下面那些绕路的方案都可以不用。
+        -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="最终权限（在电视上点一下就能拿到，不用电脑）"
+            android:textColor="#FACC15"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvGrantTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text=""
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <Button android:id="@+id/btnSelfGrant" style="@style/ActionBtn" android:text="一键获取最终权限" />
+            <Button android:id="@+id/btnProbeAdb" style="@style/ActionBtn" android:text="只检查调试通道" />
+        </LinearLayout>
+
+        <!-- 免电脑方案的主开关。放在其他操作之上，因为这一步决定「切到别的应用还有没有用」 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="把答题锁设成电视桌面（不用电脑，不用数据线）"
+            android:textColor="#FACC15"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvHomeTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text=""
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <Button android:id="@+id/btnSetHome" style="@style/ActionBtn" android:text="去设成默认桌面" />
+            <Button android:id="@+id/btnPreviewHome" style="@style/ActionBtn" android:text="预览桌面" />
+            <!-- 换成答题锁桌面之后，系统设置的入口就只剩这一个了。没有它家长会卡死 -->
+            <Button android:id="@+id/btnSysSettings" style="@style/ActionBtn" android:text="打开电视系统设置" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <Button android:id="@+id/btnA11y" style="@style/ActionBtn" android:text="开启无障碍（挂答题浮窗）" />
+            <Button android:id="@+id/btnCompat" style="@style/ActionBtn" android:text="兼容性自检" />
+            <Button android:id="@+id/btnKeyTest" style="@style/ActionBtn" android:text="遥控器按键测试" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <Button android:id="@+id/btnTryQuiz" style="@style/ActionBtn" android:text="立即弹一道题试试" android:nextFocusDown="@id/btnExit" />
+            <Button android:id="@+id/btnDiag" style="@style/ActionBtn" android:text="计时诊断" android:nextFocusLeft="@id/btnTryQuiz" android:nextFocusDown="@id/btnExit" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnExit"
+                style="@style/ActionBtn"
+                android:background="@drawable/btn_danger"
+                android:nextFocusDown="@id/btnFinish"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="退出 / 关闭守护"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="不想用了从这里关。停止、解除防卸载、卸载都在里面，进去要再输一次密码。"
+                android:textColor="#64748B"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvOwner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text=""
+            android:textColor="#94A3B8"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:text=""
+            android:textColor="#FACC15"
+            android:textSize="17sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:text="说明：本应用不修改电视系统、不影响任何内容播放，仅在屏幕点亮时计时，到点覆盖一层答题界面。熄屏、关机期间不计时。"
+            android:textColor="#475569"
+            android:textSize="11sp"
+            android:lineSpacingExtra="4dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:gravity="center"
+            android:text="答题锁 v3.4　著作权归 AI漫剧花大叔 所有"
+            android:textColor="#334155"
+            android:textSize="11sp" />
+    </LinearLayout>
+</ScrollView>
+
+<!--
+  「设置完成」钉在屏幕最下面。放在 ScrollView 外面，滚动条滚到哪儿它都在。
+  显式 focusable 是为了防止某些固件把通栏按钮当成装饰品跳过；
+  nextFocusUp 指向滚动区里最后一个按钮，让焦点能原路退回去。
+-->
+<Button
+    android:id="@+id/btnFinish"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="14dp"
+    android:background="@drawable/btn_primary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:nextFocusUp="@id/btnExit"
+    android:text="设置完成，开始守护"
+    android:textColor="#0B1220"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:stateListAnimator="@null" />
+
+</LinearLayout>

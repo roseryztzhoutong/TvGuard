@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#0B1220"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvGateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="家长设置"
+        android:textColor="#FACC15"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPinHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="输家长密码，按「确定」"
+        android:textColor="#94A3B8"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tvPinDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:letterSpacing="0.4"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="26sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:id="@+id/k1" style="@style/Keypad" android:text="1" />
+            <Button android:id="@+id/k2" style="@style/Keypad" android:text="2" />
+            <Button android:id="@+id/k3" style="@style/Keypad" android:text="3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:id="@+id/k4" style="@style/Keypad" android:text="4" />
+            <Button android:id="@+id/k5" style="@style/Keypad" android:text="5" />
+            <Button android:id="@+id/k6" style="@style/Keypad" android:text="6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:id="@+id/k7" style="@style/Keypad" android:text="7" />
+            <Button android:id="@+id/k8" style="@style/Keypad" android:text="8" />
+            <Button android:id="@+id/k9" style="@style/Keypad" android:text="9" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:id="@+id/kDel" style="@style/KeypadWide" android:text="删除" />
+            <Button android:id="@+id/k0" style="@style/Keypad" android:text="0" />
+            <Button android:id="@+id/kOk" style="@style/KeypadWide" android:text="确定" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGateCancel"
+        style="@style/KeypadWide"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="26dp"
+        android:paddingRight="26dp"
+        android:text="取消"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="© 2026 AI漫剧花大叔"
+        android:textColor="#334155"
+        android:textSize="11sp" />
+</LinearLayout>

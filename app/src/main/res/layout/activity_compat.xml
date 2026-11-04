@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark"
+    android:paddingStart="36dp"
+    android:paddingEnd="36dp"
+    android:paddingTop="18dp"
+    android:paddingBottom="14dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="兼容性自检"
+        android:textColor="@color/gold"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDevice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text=""
+        android:textColor="#94A3B8"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="方向键上下翻看，红色项必须解决，黄色项建议解决"
+        android:textColor="#475569"
+        android:textSize="11sp" />
+
+    <!-- 电视上用方向键滚动：ScrollView 自己要被 focusable，否则 D-pad 翻不动 -->
+    <ScrollView
+        android:id="@+id/scrollBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/rowBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="6dp" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRecheck"
+            style="@style/SmallBtn"
+            android:text="重新检测" />
+
+        <Button
+            android:id="@+id/btnKeyTest"
+            style="@style/SmallBtn"
+            android:layout_marginStart="10dp"
+            android:text="遥控器按键测试" />
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/SmallBtn"
+            android:layout_marginStart="10dp"
+            android:text="返回" />
+    </LinearLayout>
+</LinearLayout>

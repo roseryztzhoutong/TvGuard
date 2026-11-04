@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  电视桌面。装成默认桌面之后，孩子按「桌面键」回到的就是这一页，
+  所以这个界面就是新的「主界面」，不是设置页的变种。
+
+  答题面板直接盖在同一棵视图树的最上层（quizPanel），
+  而不是另开一个 Activity。原因：从桌面点应用、答题通过、再启动应用，
+  这一串必须一次做完，中途插入 Activity 跳转会多出几百毫秒黑屏，
+  孩子会以为卡死了。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0B1220">
+
+    <LinearLayout
+        android:id="@+id/contentLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="26dp">
+
+        <!-- 顶栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#F1F5F9"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSubline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text=""
+                    android:textColor="#94A3B8"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvClock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#FACC15"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#22304A" />
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="没读到电视上的应用。长按菜单键进设置看看。"
+            android:textColor="#64748B"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:clipToPadding="false"
+            android:paddingBottom="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/appGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tvHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="遥控器方向键选择　·　按 OK 打开　·　长按菜单键 2 秒进家长设置"
+            android:textColor="#475569"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/quizPanel"
+        layout="@layout/quiz_overlay"
+        android:visibility="gone" />
+</FrameLayout>

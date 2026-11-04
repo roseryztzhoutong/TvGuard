@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#F70B1220"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="18dp">
+
+    <!-- 逻辑画布固定 960x540（Ui.wrap 把各种电视都换算到这个尺寸），
+         长题干 + 长选项仍可能超一屏，外层 ScrollView 兜底 -->
+    <ScrollView
+        android:layout_width="880dp"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="20dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="休息一下，答对才能继续"
+                android:textColor="#FACC15"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="数学 · 连续答对 3 题才放行"
+                android:textColor="#94A3B8"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvStem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:minHeight="44dp"
+                android:text="题目加载中"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <!-- 竖排而非 2x2：英语整句、语文词组解释这类长选项横排会被裁掉 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/opt0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="44dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center_vertical|start"
+                    android:background="@drawable/btn_option"
+                    android:textColor="@color/btn_option_text"
+                    android:textSize="15sp"
+                    android:stateListAnimator="@null"
+                    android:focusable="true" />
+
+                <Button
+                    android:id="@+id/opt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:minHeight="44dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center_vertical|start"
+                    android:background="@drawable/btn_option"
+                    android:textColor="@color/btn_option_text"
+                    android:textSize="15sp"
+                    android:stateListAnimator="@null"
+                    android:focusable="true" />
+
+                <Button
+                    android:id="@+id/opt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:minHeight="44dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center_vertical|start"
+                    android:background="@drawable/btn_option"
+                    android:textColor="@color/btn_option_text"
+                    android:textSize="15sp"
+                    android:stateListAnimator="@null"
+                    android:focusable="true" />
+
+                <Button
+                    android:id="@+id/opt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:minHeight="44dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center_vertical|start"
+                    android:background="@drawable/btn_option"
+                    android:textColor="@color/btn_option_text"
+                    android:textSize="15sp"
+                    android:stateListAnimator="@null"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:minHeight="30dp"
+                android:text=""
+                android:textColor="#F87171"
+                android:textSize="13sp" />
+
+            <!-- 答错之后不再自动跳题。孩子必须自己按一下这个按钮才出下一题，
+                 否则提示一闪而过，他根本不知道刚才错在哪、正确答案是什么。 -->
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:minHeight="46dp"
+                android:background="@drawable/btn_primary"
+                android:text="我知道了，下一题"
+                android:textColor="#0B1220"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:stateListAnimator="@null"
+                android:focusable="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="遥控器方向键选择，按 OK 确认　·　家长长按返回键 3 秒"
+                android:textColor="#64748B"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

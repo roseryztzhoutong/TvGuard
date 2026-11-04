@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0B1220"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
+    android:paddingTop="18dp"
+    android:paddingBottom="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="学习报告"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <Button android:id="@+id/btnWeek" style="@style/SmallBtn" android:text="本周" />
+        <Button android:id="@+id/btnMonth" style="@style/SmallBtn" android:text="本月" android:layout_marginStart="8dp" />
+        <Button android:id="@+id/btnPhone" style="@style/SmallBtn" android:text="手机查看" android:layout_marginStart="8dp" />
+        <Button android:id="@+id/btnExport" style="@style/SmallBtn" android:text="导出" android:layout_marginStart="8dp" />
+        <Button android:id="@+id/btnClose" style="@style/SmallBtn" android:text="关闭" android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="#FACC15"
+        android:textSize="13sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_card"
+        android:padding="18dp">
+
+        <TextView
+            android:id="@+id/tvBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:text="正在统计…"
+            android:textColor="#E8EEF7"
+            android:textSize="15sp" />
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:text="© 2026 AI漫剧花大叔　保留所有权利"
+        android:textColor="#475569"
+        android:textSize="11sp" />
+</LinearLayout>

@@ -1,0 +1,34 @@
+答题锁 TvGuard v2.0
+==================
+
+产品设计与程序著作权归 AI漫剧花大叔 所有。
+Copyright (c) 2026 AI漫剧花大叔. All rights reserved.
+
+本应用不联网上传任何数据，不收集个人信息，所有使用记录只存在设备本地。
+局域网报告页仅在家庭内网提供，不经过任何服务器。
+
+题库内容来自以下开源项目，遵循 MIT 协议：
+
+  ChinaTextbookStudyFree（聪聪学堂）
+  https://github.com/wuwangzhang1216/ChinaTextbookStudyFree
+
+  MIT License
+  Copyright (c) 2026 wangzhang wu
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.

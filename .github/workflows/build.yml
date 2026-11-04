@@ -1,0 +1,89 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.4
+
+      # ---------------------------------------------------------------------
+      # 有密钥就签正式包，没有就退回 debug 证书。
+      # fork 这个仓库的人不会配 secrets，照样能编出一个装自己设备试用的包。
+      # ---------------------------------------------------------------------
+      - name: Restore signing key
+        # secrets 不能直接写在 if 里，先映射成 env 再判断
+        env:
+          KS_B64: ${{ secrets.KEYSTORE_BASE64 }}
+        if: env.KS_B64 != ''
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/keys/release.jks"
+          {
+            echo "storeFile=$RUNNER_TEMP/keys/release.jks"
+            echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}"
+            echo "keyAlias=${{ secrets.KEY_ALIAS }}"
+            echo "keyPassword=${{ secrets.KEY_PASSWORD }}"
+          } > keystore.properties
+          echo "已配置发布签名"
+
+      - name: Build release
+        run: gradle :app:assembleRelease --no-daemon --stacktrace
+
+      - name: Verify signature
+        run: |
+          APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
+          echo "APK: $APK"
+          "$ANDROID_HOME/build-tools/34.0.0/apksigner" verify --print-certs "$APK"
+
+      - name: Collect APK
+        run: |
+          mkdir -p out
+          APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
+          cp "$APK" out/TvGuard.apk
+          ls -lh out/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TvGuard-apk
+          path: out/TvGuard.apk
+          retention-days: 90
+
+      # 打 tag 才发 Release，普通提交只留 artifact，免得 Releases 被一堆草稿刷满
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/TvGuard.apk
+          generate_release_notes: true
+          body: |
+            安装步骤与权限要求见仓库 README。
+
+            提醒：本程序会申请「设备所有者」权限，一旦授予，卸载可能被系统拒绝，
+            部分机型需要恢复出厂设置才能彻底摘除。请只在自己家、自己孩子的设备上使用。

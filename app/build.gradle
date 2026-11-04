@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.application'
+}
+
+// ---------------------------------------------------------------------------
+// 发布签名
+//
+// 密钥不写进仓库。keystore.properties 由构建者自己在本地创建（见 README
+// 「自己编译」一节），该文件已在 .gitignore 里排除。
+//
+// 找不到这个文件时退回 debug 签名，这样任何人 clone 下来都能直接编译出一个
+// 能装进自己设备试用的包，不会因为「没有密钥」卡在第一步。debug 证书是公开的
+// 且所有开发机通用，只能自用，不适合长期分发，这一点 README 里写明了。
+// ---------------------------------------------------------------------------
+def keyPropsFile = rootProject.file("keystore.properties")
+def hasReleaseKey = keyPropsFile.exists()
+def keyProps = new Properties()
+if (hasReleaseKey) {
+    keyPropsFile.withInputStream { keyProps.load(it) }
+}
+
+android {
+    namespace 'com.tvguard'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.tvguard"
+        minSdk 21
+        // targetSdk 停在 28 是刻意选择：Android 9 之后前台服务类型、通知权限、
+        // 分区存储等限制逐版收紧，升上去要整套真机回归。当前配置在
+        // Android 5.0 ~ 15 的真实设备上验证过。代价是不能上 Google Play，
+        // 本项目走 GitHub Releases 直接安装，不受影响。
+        targetSdk 28
+        versionCode 24
+        versionName "3.8"
+    }
+
+    signingConfigs {
+        if (hasReleaseKey) {
+            community {
+                storeFile rootProject.file(keyProps['storeFile'])
+                storePassword keyProps['storePassword']
+                keyAlias keyProps['keyAlias']
+                keyPassword keyProps['keyPassword']
+                // 只开 v1 + v2。v3/v4 在老电视的 PackageManager 上支持参差，
+                // 全开会出现在低版本固件上装不上的情况。
+                enableV1Signing true
+                enableV2Signing true
+                enableV3Signing false
+                enableV4Signing false
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig hasReleaseKey ? signingConfigs.community : signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    // 纯系统 API，不引任何第三方库，包体最小、无依赖风险
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FA0B1220"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="32dp">
+
+    <TextView
+        android:id="@+id/tvLockIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⏳"
+        android:textSize="44sp" />
+
+    <TextView
+        android:id="@+id/tvLockTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="先休息一会"
+        android:textColor="#FACC15"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLockDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:maxLines="3"
+        android:text=""
+        android:textColor="#CBD5E1"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvCountdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <!-- 家长出口做成看得见的按钮，不再只靠「长按返回键」这种隐形手势。
+         以前锁定之后，家长不知道要长按，只能干等十分钟，或者按桌面键逃回主界面，
+         而那条路孩子也一样会用。按钮谁都能点，但点了要密码，孩子进不去。 -->
+    <Button
+        android:id="@+id/btnParentUnlock"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:minHeight="46dp"
+        android:background="@drawable/btn_option"
+        android:text="家长解锁（要输密码）"
+        android:textColor="@color/btn_option_text"
+        android:textSize="15sp"
+        android:stateListAnimator="@null"
+        android:focusable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="时间到了会自动恢复　·　家长也可以长按返回键 3 秒"
+        android:textColor="#475569"
+        android:textSize="13sp" />
+</LinearLayout>
