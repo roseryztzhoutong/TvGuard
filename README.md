@@ -201,7 +201,7 @@ adb shell dpm remove-active-admin com.tvguard/.AdminReceiver
 需要 JDK 17、Android SDK（platform 34 + build-tools 34）、Gradle 8.4。不用配别的。
 
 ```bash
-git clone https://github.com/<your-account>/TvGuard.git
+git clone https://github.com/roseryztzhoutong/TvGuard.git
 cd TvGuard
 echo "sdk.dir=/path/to/Android/Sdk" > local.properties
 gradle :app:assembleRelease
